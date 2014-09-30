@@ -1,7 +1,6 @@
 'use strict';
 
-var _   = require('lodash'),
-    frp = require('./frp');
+var frp = require('./frp');
 
 function makeBouncingBall(initialPos, initialVel) {
     var velocity    = frp.compose(frp.constant(-9.8),
@@ -20,10 +19,9 @@ function makeBouncingBall(initialPos, initialVel) {
 }
 
 var i=0;
-frp.react(makeBouncingBall(10.0, 0),
-          _.constant({ dt: 0.1 }),
-          function (r) {
-            console.log([r.vel, r.pos].join(','));
-            return i++ < 100;
-        });
+frp.react(frp.compose(makeBouncingBall(10.0, 0),
+                      frp.lift(function (ball) {
+                                 console.log([ball.vel, ball.pos].join(','));
+                                 return i++ < 100;
+                               })));
 

@@ -97,20 +97,20 @@ var frp = module.exports = {
     // ### React
 
     /**
-     * @param sf - signal function
-     * @param input - (function|array) of { dt: double, value: any }
-     * @param output - function (result), return true|false if continue or stop
+     * @param sf - signal function from *any* to true|false (continue or stop)
+     * @param input (optional) - (function|array) of { dt: double, value: any }
      */
-    react : function (sf, input, output) {
+    react : function (sf, input) {
+        input = input || _.constant({ dt: 0.1 });
         if (_.isFunction(input)) {
             var cont = true;
             while (cont) {
                 var step = input();
-                cont = output(sf(step.dt, step.value));
+                cont = sf(step.dt, step.value);
             }
         } else if (_.isArray(input)) {
             _.forEach(input, function (step) {
-                return output(sf(step.dt, step.value));
+                return sf(step.dt, step.value);
             });
         }
     }
