@@ -1,0 +1,15 @@
+{
+  "name"        : "jsfrp",
+  "version"     : "1.0.0",
+  "description" : "",
+  "main"        : "frp.js",
+  "scripts"     : {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author"       : "Rodrigo Setti",
+  "license"      : "MIT",
+  "dependencies" : {
+    "lodash": "^2.4.1"
+  }
+}
+
