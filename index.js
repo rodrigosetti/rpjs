@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 /*
-# Functional Reactive Programming in Javascript
+# Reactive Programming in Javascript
 
 ## Concepts
 
@@ -12,13 +12,13 @@ var _ = require('lodash');
 
 */
 
-var frp = module.exports = {
+var rp = module.exports = {
     // ### Sources
 
     constant : _.constant,
 
     time : function () {
-        return frp.compose(frp.constant(1), frp.integral());
+        return rp.compose(rp.constant(1), rp.integral());
     },
 
     // ### Combinators

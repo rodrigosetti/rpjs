@@ -1,25 +1,25 @@
 'use strict';
 
-var frp = require('../frp');
+var rp = require('../index');
 
 function bouncingBall(initialPos, initialVel) {
-    var velocity    = frp.compose(frp.constant(-9.8),
-                                  frp.integral(initialVel)),
-        position    = frp.compose(velocity,
-                                  frp.integral(initialPos)),
-        fallingBall = frp.fanout(function (v, p) { return { vel: v, pos: p}; },
-                                 velocity,
-                                 position);
+    var velocity    = rp.compose(rp.constant(-9.8),
+                                 rp.integral(initialVel)),
+        position    = rp.compose(velocity,
+                                 rp.integral(initialPos)),
+        fallingBall = rp.fanout(function (v, p) { return { vel: v, pos: p}; },
+                                velocity,
+                                position);
 
-    return frp.dSwitch(fallingBall,
-                       function (ball) { return ball.pos <= 0; },
-                       function (ball) {
-                          return bouncingBall(0, -0.9 * ball.vel);
-                       });
+    return rp.dSwitch(fallingBall,
+                      function (ball) { return ball.pos <= 0; },
+                      function (ball) {
+                         return bouncingBall(0, -0.9 * ball.vel);
+                      });
 }
 
-frp.react(frp.compose(bouncingBall(10.0, 0),
-                      frp.lift(function (ball) { console.log([ball.vel, ball.pos].join(',')); }),
-                      frp.time(),
-                      frp.lift(function (t) { return t < 10; })));
+rp.react(rp.compose(bouncingBall(10.0, 0),
+                    rp.lift(function (ball) { console.log([ball.vel, ball.pos].join(',')); }),
+                    rp.time(),
+                    rp.lift(function (t) { return t < 10; })));
 

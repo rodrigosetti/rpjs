@@ -1,8 +1,7 @@
 'use strict';
 
-var frp = require('../frp'),
-    _   = require('lodash');
-
+var rp = require('../index'),
+    _  = require('lodash');
 
 // "fake" gravitational constant
 var G = 100;
@@ -25,14 +24,14 @@ function force(p) {
 //                 +----- velocity <-----+
 //
 function orbit(initialPos, initialVel) {
-  return frp.feedback(initialPos,
-                      frp.compose(frp.lift(force),            // position -> acceleration
-                                  frp.integral(initialVel),   //          -> velocity
-                                  frp.integral(initialPos))); //          -> position
+  return rp.feedback(initialPos,
+                     rp.compose(rp.lift(force),            // position -> acceleration
+                                rp.integral(initialVel),   //          -> velocity
+                                rp.integral(initialPos))); //          -> position
 }
 
-frp.react(frp.compose(frp.fanout(function (t, p) { console.log(t + ',' + p.join(',')); return t; },
-                                 frp.time(),
-                                 orbit([60, 60], [1, -0.1])),
-                      frp.lift(function (t) { return t < 2000; })));
+rp.react(rp.compose(rp.fanout(function (t, p) { console.log(t + ',' + p.join(',')); return t; },
+                              rp.time(),
+                              orbit([60, 60], [1, -0.1])),
+                    rp.lift(function (t) { return t < 2000; })));
 
