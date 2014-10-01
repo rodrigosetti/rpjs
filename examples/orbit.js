@@ -31,8 +31,8 @@ function orbit(initialPos, initialVel) {
                                   frp.integral(initialPos))); //          -> position
 }
 
-frp.react(frp.compose(orbit([60, 60], [1, -0.1]),
-                      frp.lift(function (v) { console.log(v.join(',')); }),
-                      frp.time(),
-                      frp.lift(function (t) { return t < 700; })));
+frp.react(frp.compose(frp.fanout(function (t, p) { console.log(t + ',' + p.join(',')); return t; },
+                                 frp.time(),
+                                 orbit([60, 60], [1, -0.1])),
+                      frp.lift(function (t) { return t < 2000; })));
 
