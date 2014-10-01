@@ -26,7 +26,12 @@ var frp = module.exports = {
     integral : function (c) {
         var accum = c || 0;
         return function(dt, value) {
-            accum += dt * value;
+            if (_.isArray(value)) {
+                accum = _.map(value,
+                              function(v, i) { return (accum[i] || 0) + (dt * v); });
+            } else {
+                accum += dt * value;
+            }
             return accum;
         };
     },
