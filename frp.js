@@ -37,6 +37,19 @@ var frp = module.exports = {
     },
 
     /**
+     *     initialValue --- sf ---+---> y
+     *                      ^     |
+     *                      |     |
+     *                      +-----+
+     */
+    feedback : function (initValue, sf) {
+        return function (dt) {
+            initValue = sf(dt, initValue);
+            return initValue;
+        };
+    },
+
+    /**
      * send input value to all signal function arguments and through f
      *
      *     x ---------> +---+
