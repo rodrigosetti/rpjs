@@ -1,6 +1,6 @@
 'use strict';
 
-var rp = require('../index');
+var rp = require('../rp');
 
 function bouncingBall(initialPos, initialVel) {
     var velocity    = rp.compose(rp.constant(-9.8),

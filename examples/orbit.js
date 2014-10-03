@@ -1,6 +1,6 @@
 'use strict';
 
-var rp = require('../index'),
+var rp = require('../rp'),
     _  = require('lodash');
 
 // "fake" gravitational constant
