@@ -1,5 +1,5 @@
 Reactive Programming
 ====================
 
-Please read the [paper](paper/paper.pdf).
+Please read the [paper](http://rodrigosetti.github.io/rpjs/paper.pdf).
 
